@@ -1,0 +1,556 @@
+@charset "UTF-8";
+/**/
+
+.circle-graph p {
+text-align: center;
+  padding: 10px;
+  z-index: 100;
+  color: #606770;
+} 
+
+header ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  background: #f3f3f3;
+}
+
+header ul li {
+  font-weight: 300;
+  font-size: 14px;
+  padding: 0 10px;
+  position: relative;
+}
+header ul li a {
+  color: #606770;
+  transition: all .25s ease;
+}
+header ul li a:hover {
+  font-weight: bold;
+}
+header ul li:after {
+  content: '/';
+  position: relative;
+  right: -10px;
+  color: #606770;
+}
+header ul li:last-of-type:after {
+  content: ' ';
+}
+header .credits {
+  font-size: 14px;
+  background: transparent;
+  color: #606770;
+}
+
+circle-graph-container {
+
+}
+
+canvas {
+  top: 120px; 
+}
+
+.title{
+	color: rgba(1, 1, 1, 0.5);
+}
+.subTitle{
+	color: black;
+}
+.passage{
+	color: #606770;
+}
+
+
+@media all and (min-width: 1200px){
+.graph-one {
+height: 300px; /* set height for postioning */
+}
+.circle-graph {
+margin: 0 80px;
+  float: left;
+}
+header ul {
+  padding: 20px;
+}
+	html {
+		-webkit-font-size: 1em;
+		-moz-font-size: 1em;
+		font-size: 1em;
+		/*margin: 0 3em;*/
+		-moz-width: 95%;
+	}
+
+	body {
+	  font-family: Arial, sans-serif;
+	  font-weight: 400;
+	  line-height: 1.45;
+	  color: #333;
+	  width: 100%;
+	}
+
+	p {margin: 0 0.5em 0.5em;
+		line-height: 1.75;}
+
+	h1, h2, h3, h4 {
+	font-family: Arial, serif;
+	margin: 1.414em 0.5em 0.5em;
+	font-weight: inherit;
+	line-height: 1.2;
+	}
+
+	h1 {
+	margin-top: 0;
+	font-size: 3.998em;
+	}
+
+	h2 {
+	-webkit-font-size: 2.827em;
+	-moz-font-size: 3.827em;
+	font-size: 2.827em;
+	}
+
+	h3 {font-size: 1.999em;}
+
+	h4 {font-size: 1.414em;}
+
+.background{
+	width: 100%;
+	height: 100%;
+	background-color: #f3f3f3;
+	/*-moz-font-size: 2em;*/
+}
+
+.subTitle{
+	position: relative;
+	margin: 0 3% 0.75em 7%;
+	line-height: 1.4em;
+}
+.passage{
+	font-size: 1.4em;
+}
+.quote{
+	position: absolute;
+	left: -1em;
+}
+.PandName{
+	display: grid;
+	grid-template-columns: 30% 200px auto;
+    grid-template-rows: 60px 140px;
+    grid-template-areas: 
+        ". Avatar ."
+        ". Avatar Name";
+}
+.Name{
+	grid-area: Name;
+}
+small, .font_small {font-size: 0.707em;}
+.Avatar{
+	grid-area: Avatar;
+	width: 168px;
+	height: 168px;
+	margin-right: 8px !important;
+	padding:2px !important;
+	background: #8fa3aa;
+	border-radius:50% !important;
+	box-shadow:inset 0px 0px 1px rgba(0,0,0,0.4);
+	-moz-border-radius: 40px;
+	-webkit-border-radius: 40px;
+	display: inline-block;
+	position: relative;
+	top: 15px;
+}
+.Avatar img, .listAvatar img, .navAvatar div, .listAvatar div{
+	width: 162px;
+	height: 162px;
+	line-height: 0;
+	display: inline-block;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+.Contract{
+	display: grid;
+	grid-template-columns: 50% 50%;
+    grid-template-rows: 30px;
+    grid-template-areas: 
+        "tel email";
+}
+.tel{
+	grid-area: tel;
+}
+.email{
+	grid-area: email;
+}
+
+}
+
+@media all and (max-width: 1199px) and (min-width: 960px){
+.graph-one {
+height: 250px; /* set height for postioning */
+}
+.circle-graph {
+margin: 0 35px;
+  float: left;
+}
+header ul {
+  padding: 15px;
+}
+	html {
+		-webkit-font-size: 1em;
+		-moz-font-size: 1em;
+		font-size: 1em;
+		/*margin: 0 3em;*/
+		-moz-width: 95%;
+	}
+
+	body {
+	  font-family: Arial, sans-serif;
+	  font-weight: 400;
+	  line-height: 1.45;
+	  color: #333;
+	  width: 100%;
+	}
+
+	p {margin: 0 0.5em 0.5em;
+		line-height: 1.75;}
+
+	h1, h2, h3, h4 {
+	font-family: Arial, serif;
+	margin: 1.414em 0.5em 0.5em;
+	font-weight: inherit;
+	line-height: 1.2;
+	}
+
+	h1 {
+	margin-top: 0;
+	font-size: 3.998em;
+	}
+
+	h2 {
+	-webkit-font-size: 2.827em;
+	-moz-font-size: 3.827em;
+	font-size: 2.827em;
+	}
+
+	h3 {font-size: 1.999em;}
+
+	h4 {font-size: 1.414em;}
+
+.background{
+	width: 100%;
+	height: 100%;
+	background-color: #f3f3f3;
+	/*-moz-font-size: 2em;*/
+}
+.subTitle{
+	position: relative;
+	margin: 0 3% 0.75em 7%;
+	line-height: 1.4em;
+}
+.passage{
+	font-size: 1.4em;
+	/*-moz-font-size: 2em;*/
+}
+.quote{
+	position: absolute;
+	left: -1em;
+}
+.PandName{
+	display: grid;
+	grid-template-columns: 10% 200px auto;
+    grid-template-rows: 60px 140px;
+    grid-template-areas: 
+        ". Avatar ."
+        ". Avatar Name";
+}
+.Name{
+	grid-area: Name;
+}
+small, .font_small {font-size: 0.707em;}
+.Avatar{
+	grid-area: Avatar;
+	width: 168px;
+	height: 168px;
+	margin-right: 8px !important;
+	padding:2px !important;
+	background: #8fa3aa;
+	border-radius:50% !important;
+	box-shadow:inset 0px 0px 1px rgba(0,0,0,0.4);
+	-moz-border-radius: 40px;
+	-webkit-border-radius: 40px;
+	display: inline-block;
+	position: relative;
+	top: 15px;
+}
+.Avatar img, .listAvatar img, .navAvatar div, .listAvatar div{
+	width: 162px;
+	height: 162px;
+	line-height: 0;
+	display: inline-block;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+.Contract{
+	display: grid;
+	grid-template-columns: 50% 50%;
+    grid-template-rows: 60px;
+    grid-template-areas: 
+        "tel email";
+}
+.tel{
+	grid-area: tel;
+}
+.email{
+	grid-area: email;
+}
+
+}
+
+@media all and (max-width: 959px) and (min-width: 620px){
+.graph-one {
+height: 450px; /* set height for postioning */
+}
+.circle-graph {
+margin: 0 60px 60px 120px;
+  float: left;
+}
+header ul {
+  padding: 10px;
+}
+	html {
+		-webkit-font-size: 1em;
+		-moz-font-size: 1em;
+		font-size: 1em;
+		/*margin: 0 3em;*/
+		-moz-width: 95%;
+	}
+
+	body {
+	  font-family: Arial, sans-serif;
+	  font-weight: 400;
+	  line-height: 1.45;
+	  color: #333;
+	  width: 100%;
+	}
+
+	p {margin: 0 0.5em 0.5em;
+		line-height: 1.75;}
+
+	h1, h2, h3, h4 {
+	font-family: Arial, serif;
+	margin: 1.414em 0.5em 0.5em;
+	font-weight: inherit;
+	line-height: 1.2;
+	}
+
+	h1 {
+	margin-top: 0;
+	font-size: 3.998em;
+	}
+
+	h2 {
+	-webkit-font-size: 2em;
+	-moz-font-size: 3em;
+	font-size: 2em;
+	}
+
+	h3 {font-size: 1.999em;}
+
+	h4 {font-size: 1.414em;}
+
+.background{
+	width: 100%;
+	height: 100%;
+	background-color: #f3f3f3;
+	/*-moz-font-size: 2em;*/
+}
+.subTitle{
+	position: relative;
+	margin: 0 3% 0.75em 7%;
+	line-height: 1.4em;
+}
+.passage{
+	font-size: 1.4em;
+	/*-moz-font-size: 2em;*/
+}
+.quote{
+	position: absolute;
+	left: -1em;
+}
+.PandName{
+	display: grid;
+	grid-template-columns: 120px auto;
+    grid-template-rows: 60px 100px;
+    grid-template-areas: 
+        "Avatar ."
+        "Avatar Name";
+}
+.Name{
+	grid-area: Name;
+}
+small, .font_small {font-size: 0.707em;}
+.Avatar{
+	grid-area: Avatar;
+	width: 120px;
+	height: 120px;
+	margin-right: 8px !important;
+	padding:2px !important;
+	background: #8fa3aa;
+	border-radius:50% !important;
+	box-shadow:inset 0px 0px 1px rgba(0,0,0,0.4);
+	-moz-border-radius: 40px;
+	-webkit-border-radius: 40px;
+	display: inline-block;
+	position: relative;
+	top: 15px;
+}
+.Avatar img, .listAvatar img, .navAvatar div, .listAvatar div{
+	width: 115px;
+	height: 115px;
+	line-height: 0;
+	display: inline-block;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+.Contract{
+	display: grid;
+	grid-template-columns: 40% 60%;
+    grid-template-rows: 30px;
+    grid-template-areas: 
+        "tel email";
+}
+.tel{
+	grid-area: tel;
+}
+.email{
+	grid-area: email;
+}
+
+}
+
+@media all and (max-width: 619px){
+.graph-one {
+height: 900px; /* set height for postioning */
+}
+.circle-graph {
+margin: 0 30px 60px 100px;
+  float: left;
+}
+header ul {
+  padding: 5px;
+}
+	html {
+		-webkit-font-size: 1em;
+		-moz-font-size: 1em;
+		font-size: 1em;
+		/*margin: 0 3em;*/
+		-moz-width: 95%;
+	}
+
+	body {
+	  font-family: Arial, sans-serif;
+	  font-weight: 400;
+	  line-height: 1.45;
+	  color: #333;
+	  width: 100%;
+	}
+
+	p {margin: 0 0.5em 0.5em;
+		line-height: 1.75;}
+
+	h1, h2, h3, h4 {
+	font-family: Arial, serif;
+	margin: 0.5em 0.5em 0.5em;
+	font-weight: inherit;
+	line-height: 1.2;
+	}
+
+	h1 {
+	margin-top: 0;
+	font-size: 2.7em;
+	}
+
+	h2 {
+	-webkit-font-size: 2.827em;
+	-moz-font-size: 3.827em;
+	font-size: 2em;
+	}
+
+	h3 {font-size: 1.999em;}
+
+	h4 {font-size: 1.414em;}
+
+.background{
+	width: 100%;
+	height: 100%;
+	background-color: #f3f3f3;
+	/*-moz-font-size: 2em;*/
+}
+.subTitle{
+	position: relative;
+	margin: 0 3% 0.75em 7%;
+	line-height: 1.4em;
+}
+.passage{
+	font-size: 1.2em;
+	/*-moz-font-size: 2em;*/
+}
+.quote{
+	position: absolute;
+	left: -1em;
+}
+.PandName{
+	display: grid;
+	grid-template-columns: 30% 100px 30%;
+    grid-template-rows: 110px 70px;
+    grid-template-areas: 
+        ". Avatar ."
+        "Name Name Name";
+}
+.Name{
+	grid-area: Name;
+}
+small, .font_small {font-size: 0.707em;}
+.Avatar{
+	grid-area: Avatar;
+	width: 90px;
+	height: 90px;
+	margin-right: 8px !important;
+	padding:2px !important;
+	background: #8fa3aa;
+	border-radius:50% !important;
+	box-shadow:inset 0px 0px 1px rgba(0,0,0,0.4);
+	-moz-border-radius: 40px;
+	-webkit-border-radius: 40px;
+	display: inline-block;
+	position: relative;
+	top: 15px;
+}
+.Avatar img, .listAvatar img, .navAvatar div, .listAvatar div{
+	width: 85px;
+	height: 85px;
+	line-height: 0;
+	display: inline-block;
+	border-radius: 50%;
+	-moz-border-radius: 50%;
+	-webkit-border-radius: 50%;
+}
+.Contract{
+	display: grid;
+	grid-template-columns: auto;
+    grid-template-rows: 40px 40px;
+    grid-template-areas: 
+        "tel"
+         "email";
+}
+.tel{
+	grid-area: tel;
+}
+.email{
+	grid-area: email;
+}
+
+}

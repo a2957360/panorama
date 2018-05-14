@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>three.js webgl - panorama</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Playfair+Display');
+        html, body {
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            width:100%;
+        }
+        #container{
+            height:100%;
+            width:100%;
+            overflow: hidden;
+            position: relative;
+        }
+        #arrow{
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            z-index: 1000;
+            color: grey;
+            font-size: 50px;
+            font-family: 'Playfair Display', serif;
+        }
+    </style>
+ 
+</head>
+<body>
+<div id="container">
+    <div id="arrow"></div> 
+</div>
+
+ 
+<!-- <div id="btn">
+    <button type="button">开始/停止自动旋转</button>
+    <button type="button">开启/关闭全屏</button>
+    <button type="button">开启/关闭陀螺仪</button>
+    <button type="button">开启/关闭双屏</button>
+    <button type="button">直接跳转到lon为180，lat为80</button>
+    <button type="button">切换场景</button>
+</div> -->
+</body>
+<script src="js/three.js"></script>
+ <script src="js/renderers/CSS3DRenderer.js"></script>
+
+ <script>
+    container = document.getElementById( 'container' );
+ var camera, scene, renderer;
+ var geometry, material, mesh;
+ var target = new THREE.Vector3();
+ var lon = 90, lat = 0;
+ var phi = 0, theta = 0;
+ var touchX, touchY;
+ var templon = 0;
+ var templat = 0;
+ var time = 0;
+ var text = "";  
+
+ init();
+ animate();
+
+ function init() {
+     camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 1000 );
+
+     scene = new THREE.Scene();
+     var sides = [
+         {
+             url: 'images/sky/l.jpg', //left
+             position: [ -512, 0, 0 ],
+             rotation: [ 0, Math.PI / 2, 0 ]
+         },
+         {
+             url: 'images/sky/r.jpg', //right
+             position: [ 512, 0, 0 ],
+             rotation: [ 0, -Math.PI / 2, 0 ]
+         },
+         {
+             url: 'images/sky/u.jpg', //up
+             position: [ 0,  512, 0 ],
+             rotation: [ Math.PI / 2, 0, Math.PI  ]
+         },
+         {
+             url: 'images/sky/d.jpg', //down
+             position: [ 0, -512, 0 ],
+             rotation: [ -Math.PI / 2, 0, Math.PI ]
+         },
+         {
+             url: 'images/sky/f.jpg', //front
+             position: [ 0, 0,  512 ],
+             rotation: [ 0, Math.PI, 0 ]
+         },
+         {
+             url: 'images/sky/b.jpg', //back
+             position: [ 0, 0, -512 ],
+             rotation: [ 0, 0, 0 ]
+         }
+     ];
+     for ( var i = 0; i < sides.length; i ++ ) {
+
+         var side = sides[ i ];
+
+         var element = document.createElement( 'img' );
+         element.width = 1026; 
+         element.src = side.url;
+         var object = new THREE.CSS3DObject( element );
+         object.position.fromArray( side.position );
+         object.rotation.fromArray( side.rotation );
+         scene.add( object );
+
+     }
+     renderer = new THREE.CSS3DRenderer();
+     renderer.setSize( window.innerWidth, window.innerHeight );
+     container.appendChild( renderer.domElement );
+
+     document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+     document.addEventListener( 'wheel', onDocumentMouseWheel, false );
+
+     document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+     document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+     window.addEventListener( 'resize', onWindowResize, false );
+
+     window.addEventListener("deviceorientation", orientationHandler, false);  
+
+
+ }
+
+ function onWindowResize() {
+     camera.aspect = window.innerWidth / window.innerHeight;
+     camera.updateProjectionMatrix();
+
+     renderer.setSize( window.innerWidth, window.innerHeight );
+
+ }
+
+ function onDocumentMouseDown( event ) {
+     event.preventDefault();
+     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+     document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+
+ }
+
+    function orientationHandler(event) {  
+        // text = ""  
+        // var arrow = document.getElementById("arrow");  
+        // text += "<p>左右旋转：rotate alpha{" + Math.round(event.alpha) + "deg)";  
+        // text += "<p>前后旋转：rotate beta{" + Math.round(event.beta) + "deg)";  
+        // text += "<p>扭转设备：rotate gamma{" + Math.round(event.gamma) + "deg)";  
+        // text += "<p>lon {" + lon + "deg)"; 
+        // text += "<p>lat {" + lat + "deg)";  
+        if(time < 3){
+            if(templon == 0){
+            lon = -event.alpha;
+                templon = event.alpha;
+            }else{
+                if(event.beta < 87 || event.beta > 93){
+                        text += "<p>" + Math.abs(templon - event.alpha) ;  
+                        if(templon > 200 && event.alpha < 100){
+                            lon += -(360 - templon) - event.alpha;
+                            templon = event.alpha;
+                        }else{
+                            lon += templon - event.alpha;
+                            templon = event.alpha;
+                        }
+                }else{
+                    templon = event.alpha;
+                }
+            }
+            // lon = -event.alpha;
+            lat = event.beta - 90;
+        }
+        // arrow.innerHTML = text;  
+    }  
+
+ function onDocumentMouseMove( event ) {
+     var movementX = event.movementX || event.mozMovementX || event.webkitMovementX || 0;
+     var movementY = event.movementY || event.mozMovementY || event.webkitMovementY || 0;
+
+     lon -= movementX * 0.1;
+     lat += movementY * 0.1;
+
+ }
+
+ function onDocumentMouseUp( event ) {
+     document.removeEventListener( 'mousemove', onDocumentMouseMove );
+     document.removeEventListener( 'mouseup', onDocumentMouseUp );
+
+ }
+
+ function onDocumentMouseWheel( event ) {
+     camera.fov += event.deltaY * 0.05;
+     camera.updateProjectionMatrix();
+
+ }
+
+ function onDocumentTouchStart( event ) {
+
+     event.preventDefault();
+     //use touchX and touchY to carculate mobile
+     var touch = event.touches[ 0 ];
+
+     touchX = touch.screenX;
+     touchY = touch.screenY;
+
+ }
+
+ function onDocumentTouchMove( event ) {
+
+     event.preventDefault();
+
+     var touch = event.touches[ 0 ];
+
+     lon -= ( touch.screenX - touchX ) * 0.1;
+     lat += ( touch.screenY - touchY ) * 0.1;
+
+     touchX = touch.screenX;
+     touchY = touch.screenY;
+
+ }
+ function animate() {
+
+     requestAnimationFrame( animate );
+     lon = lon % 360;
+     if(lon < 0){
+        lon = 360 + lon;
+     }
+    if(lon < 170 && lon > 130 && lat > -10){
+        time += 0.01;
+        if(time >= 3 && time <= 4){
+            text = "" ;
+            var arrow = document.getElementById("arrow");  
+            arrow.innerHTML = text;
+            camera.fov -= 0.1;
+            camera.updateProjectionMatrix();
+        }
+        else if(time > 4 && time <= 5){
+            camera.fov += 0.8;
+            camera.updateProjectionMatrix();
+        }else if(time >= 5){
+            window.location.href="panorama.html"
+        }
+        else{
+            text = "" ;
+            var arrow = document.getElementById("arrow");  
+            text += "<p>Sun Above CLoud";  
+            text += "<p>Keep looking for 3 sconds";  
+            text += "<p>"+Math.round(time);  
+            arrow.innerHTML = text; 
+        }
+     }
+     if(time == 0){
+        text = "" ;
+        var arrow = document.getElementById("arrow");  
+        text += "<p>Look Around";  
+        arrow.innerHTML = text; 
+     }
+     // lon +=  movelon;
+     // lat +=  movelat;
+     // lat = Math.max( - 85, Math.min( 85, lat ) );
+     phi = THREE.Math.degToRad( 90 - lat ); 
+     theta = THREE.Math.degToRad( lon );
+     //camera focuse point
+     if(time < 3){
+        target.x = Math.sin( phi ) * Math.cos( theta );
+        target.y = Math.cos( phi );
+        target.z = Math.sin( phi ) * Math.sin( theta );
+        camera.lookAt( target );
+     }
+
+     renderer.render( scene, camera );
+
+ }
+</script>
+</html>

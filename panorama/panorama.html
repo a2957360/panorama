@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>ZIM MVC App Advanced</title>
+
+<!-- Welcome to ZIM at http://zimjs.com - Code Interactive Media Pizzazz! 	        -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS http://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner 	-->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate 	-->
+
+<script src="http://d309knd7es5f10.cloudfront.net/createjs_1.1_min.js"></script>
+<script>
+	var zon = true; // set to false to turn off console messages from zim
+	var zns = false; // set to true to require zim namespace - eg. new zim.Frame()
+</script>
+<script src="https://d309knd7es5f10.cloudfront.net/zim_6.9.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<script src="scripts/model.js"></script>
+<script src="scripts/view.js"></script>
+<script src="scripts/controller.js"></script>
+
+
+<script>
+
+var stage;
+var stageW;
+var stageH;
+
+var frame = new Frame();
+
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+    frame.loadAssets(["Room1.png","Room2.png"],"images/");
+	frame.loadAssets({font:"titlefont", src: "https://fonts.googleapis.com/css?family=Roboto"});
+    stage = frame.stage;
+    stageW = frame.width;
+    stageH = frame.height;
+
+    frame.outerColor = "#666";
+    frame.color = frame.black;
+	frame.on("complete", function(){
+		var layoutManager = new LayoutManager();
+
+	    var model = new app.Model();
+	    // zog(model.colors);
+	    var view = new app.View(model, layoutManager);
+
+	    var pages = new Pages([
+			{page:view.page1, swipe:[view.page2, view.page2]}
+			,{page:view.page2, swipe:[view.page1, view.page1]}
+		], "slide", 1000).addTo();
+
+		app.makeController(model, view, pages);
+
+		// layoutManager.dispose();
+
+		frame.on("resize", resize);
+	    function resize() {
+			stageW = frame.width;
+			stageH = frame.height;
+			layoutManager.resize();
+			view.layout1.resize();
+			view.layout2.resize();
+		}
+
+	    stage.update(); // this is needed to show any changes
+	})
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>
